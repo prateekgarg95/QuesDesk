@@ -11,7 +11,7 @@
     tools:context="com.crapp.quesdesk.LoginActivity">
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/login_button"
+        android:id="@+id/signInBtn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"/>
