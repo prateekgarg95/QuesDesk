@@ -18,6 +18,9 @@ public class DashboardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        txtName = (TextView) findViewById(R.id.name);
+        txtEmail = (TextView) findViewById(R.id.email);
+
         SharedPreferences sharedPreferences = getSharedPreferences("USER",MODE_PRIVATE);
         txtName.setText(sharedPreferences.getString("Name",null));
         txtEmail.setText(sharedPreferences.getString("Email",null));
