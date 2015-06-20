@@ -148,6 +148,7 @@ public class LoginActivity extends Activity implements
         finish();
         Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
         startActivity(intent);
+        signOutFromGplus();
 
     }
 
