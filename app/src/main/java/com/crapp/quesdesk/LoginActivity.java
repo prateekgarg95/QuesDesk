@@ -34,6 +34,8 @@ public class LoginActivity extends Activity implements
     String name, email;
     SignInButton signInButton;
 
+    private String userDetailsURL;
+
     /**
      * A flag indicating that a PendingIntent is in progress and prevents us
      * from starting further intents.
@@ -43,6 +45,8 @@ public class LoginActivity extends Activity implements
     private boolean mSignInClicked;
 
     private ConnectionResult mConnectionResult;
+
+    private TransferDataHTTP transferDataHTTP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +142,9 @@ public class LoginActivity extends Activity implements
 
         // Get user's information
         getProfileInformation();
+        finish();
+        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+        startActivity(intent);
         successfulLogin = true;
         SharedPreferences userPreferences = getSharedPreferences("USER",MODE_PRIVATE);
         SharedPreferences.Editor editor = userPreferences.edit();
@@ -145,10 +152,9 @@ public class LoginActivity extends Activity implements
         editor.putString("Email", email);
         editor.putBoolean("LoginSuccess", successfulLogin);
         editor.commit();
-        finish();
-        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-        startActivity(intent);
         signOutFromGplus();
+        String userDetailParameters = TransferDataHTTP.createUserDetailsParameters(name, email);
+        TransferDataHTTP.executePOST(userDetailsURL,userDetailParameters);
 
     }
 
@@ -218,4 +224,6 @@ public class LoginActivity extends Activity implements
             mGoogleApiClient.connect();
         }
     }
+
+
 }
