@@ -2,9 +2,11 @@ package com.crapp.quesdesk;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -48,7 +50,10 @@ public class TransferDataHTTP {
             return response.toString();
 
 
-        }catch (Exception e){
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+            return null;
+        }catch (IOException e){
             e.printStackTrace();
             return null;
         }finally {
