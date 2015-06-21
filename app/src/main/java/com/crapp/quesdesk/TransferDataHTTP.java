@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,6 +31,8 @@ public class TransferDataHTTP {
             connection.setDoInput(true);
             connection.setDoOutput(true);
 
+            connection.connect();
+
             //Send request
             DataOutputStream wr = new DataOutputStream(
                     connection.getOutputStream ());
@@ -44,10 +47,11 @@ public class TransferDataHTTP {
             StringBuilder response = new StringBuilder();
             while((line = rd.readLine()) != null) {
                 response.append(line);
-                response.append('\r');
+                response.append('\n');
             }
             rd.close();
             return response.toString();
+
 
 
         }catch (MalformedURLException e){
