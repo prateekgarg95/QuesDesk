@@ -1,19 +1,31 @@
 package com.crapp.quesdesk;
 
+import android.util.Log;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Map;
 
 public class TransferDataHTTP {
 
-    public static String executePOST(String targetURL, String urlParameters){
+    String jsonString;
+
+    public String executePOST(String targetURL, String urlParameters){
 
         URL url;
         HttpURLConnection connection = null;
@@ -68,7 +80,7 @@ public class TransferDataHTTP {
 
     }
 
-    public static String createUserDetailsParameters(String name,String email){
+    public String createUserDetailsParameters(String name,String email){
         String urlParameters;
         try{
             urlParameters ="name=" + URLEncoder.encode(name, "UTF-8") + "&email=" + URLEncoder.encode(email, "UTF-8");
@@ -77,5 +89,31 @@ public class TransferDataHTTP {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+
+    public String sendParams(String targetURL, Map<String, String> params){
+        CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, targetURL, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    jsonString = response.toString();
+
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError response) {
+                Log.d("Response: ", response.toString());
+            }
+        });
+        AppController.getInstance().addToRequestQueue(jsObjRequest);
+        return jsonString;
     }
 }

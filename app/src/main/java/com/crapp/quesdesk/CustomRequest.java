@@ -37,6 +37,11 @@ public class CustomRequest extends Request<JSONObject> {
     }
 
     @Override
+    protected void deliverResponse(JSONObject response) {
+        listener.onResponse(response);
+    }
+
+    @Override
     protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,
@@ -49,10 +54,4 @@ public class CustomRequest extends Request<JSONObject> {
             return Response.error(new ParseError(je));
         }
     }
-
-    @Override
-    protected void deliverResponse(JSONObject response) {
-        listener.onResponse(response);
-    }
-
 }
