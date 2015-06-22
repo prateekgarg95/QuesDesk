@@ -58,10 +58,8 @@ public class LoginActivity extends Activity implements
     // JSONObject Response from the Server
     private JSONObject jsonObject;
 
-    /**
-     * A flag indicating that a PendingIntent is in progress and prevents us
-     * from starting further intents.
-     */
+    // A flag indicating that a PendingIntent is in progress and prevents us
+    //from starting further intents.
     private boolean mIntentInProgress;
 
     // If the SignIn Button is clicked
