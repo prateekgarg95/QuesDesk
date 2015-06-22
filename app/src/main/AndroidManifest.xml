@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.crapp.quesdesk" >
 
+    <!-- Permission to access Internet Connection -->
     <uses-permission android:name="ANDROID.PERMISSION.INTERNET"/>
+    <!-- Permission to access the Accounts (i.e. Google Accounts) registered on the device -->
     <uses-permission android:name="ANDROID.PERMISSION.GET_ACCOUNTS"/>
+    <!-- Permission to access the credentials of the account -->
     <uses-permission android:name="ANDROID.PERMISSION.USE_CREDENTIALS"/>
 
     <application
@@ -13,26 +16,30 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
+        <!-- Splash Screen -->
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
+                <!-- Set the Splash Screen as the Launching Screen -->
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- Login with Google Screen -->
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
 
+        <!-- Dashboard Screen -->
         <activity
             android:name=".DashboardActivity"
             android:label="@string/title_activity_dashboard" >
         </activity>
 
+        <!-- MetaData for Google Login -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

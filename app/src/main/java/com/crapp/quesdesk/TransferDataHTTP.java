@@ -6,7 +6,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -24,22 +23,23 @@ import java.util.Map;
 public class TransferDataHTTP {
 
     String jsonString;
+    JSONObject jsonObject;
 
-    public String executePOST(String targetURL, String urlParameters){
+    public String executePOST(String targetURL, String urlParameters) {
 
         URL url;
         HttpURLConnection connection = null;
 
         try {
             url = new URL(targetURL);
-            connection = (HttpURLConnection)url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
 
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setRequestProperty("Content-Length", "" + Integer.toString(urlParameters.getBytes().length));
             connection.setRequestProperty("Content-Language", "en-US");
 
-            connection.setUseCaches (false);
+            connection.setUseCaches(false);
             connection.setDoInput(true);
             connection.setDoOutput(true);
 
@@ -47,7 +47,7 @@ public class TransferDataHTTP {
 
             //Send request
             DataOutputStream wr = new DataOutputStream(
-                    connection.getOutputStream ());
+                    connection.getOutputStream());
             wr.writeBytes(urlParameters);
             wr.flush();
             wr.close();
@@ -57,7 +57,7 @@ public class TransferDataHTTP {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
             String line;
             StringBuilder response = new StringBuilder();
-            while((line = rd.readLine()) != null) {
+            while ((line = rd.readLine()) != null) {
                 response.append(line);
                 response.append('\n');
             }
@@ -65,44 +65,42 @@ public class TransferDataHTTP {
             return response.toString();
 
 
-
-        }catch (MalformedURLException e){
+        } catch (MalformedURLException e) {
             e.printStackTrace();
             return null;
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }finally {
-            if(connection != null) {
+        } finally {
+            if (connection != null) {
                 connection.disconnect();
             }
         }
 
     }
 
-    public String createUserDetailsParameters(String name,String email){
+    public String createUserDetailsParameters(String name, String email) {
         String urlParameters;
-        try{
-            urlParameters ="name=" + URLEncoder.encode(name, "UTF-8") + "&email=" + URLEncoder.encode(email, "UTF-8");
+        try {
+            urlParameters = "name=" + URLEncoder.encode(name, "UTF-8") + "&email=" + URLEncoder.encode(email, "UTF-8");
             return urlParameters;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
 
-
-    public String sendParams(String targetURL, Map<String, String> params){
+    public JSONObject sendParams(String targetURL, Map<String, String> params) {
         CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, targetURL, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    jsonString = response.toString();
+                    jsonObject = response;
 
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
+                    jsonObject = null;
                 }
 
             }
@@ -114,6 +112,6 @@ public class TransferDataHTTP {
             }
         });
         AppController.getInstance().addToRequestQueue(jsObjRequest);
-        return jsonString;
+        return jsonObject;
     }
 }
