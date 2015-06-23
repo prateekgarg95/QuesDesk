@@ -8,6 +8,8 @@
     <uses-permission android:name="ANDROID.PERMISSION.GET_ACCOUNTS" />
     <!-- Permission to access the credentials of the account -->
     <uses-permission android:name="ANDROID.PERMISSION.USE_CREDENTIALS" />
+    <!-- Permission to wakeup the device from sleep mode -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".AppController"
@@ -46,10 +48,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <service
-            android:name=".MQTTService"
-            android:enabled="true"
-            android:exported="true" />
+        <service android:name=".SupportService" />
     </application>
 
 </manifest>
