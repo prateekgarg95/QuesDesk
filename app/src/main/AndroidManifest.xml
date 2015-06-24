@@ -11,6 +11,10 @@
     <!-- Permission to wakeup the device from sleep mode -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="ANDROID.PERMISSION.VIBRATE" />
+
     <application
         android:name=".AppController"
         android:allowBackup="true"
@@ -48,7 +52,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <service android:name=".SupportService" />
+        <!-- MqttService -->
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+
     </application>
 
 </manifest>
