@@ -1,7 +1,6 @@
 package com.crapp.quesdesk;
 
 import android.app.ListActivity;
-
 import android.os.Bundle;
 import android.view.Menu;
 
